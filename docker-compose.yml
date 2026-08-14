@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hhgoarag-voice-rag
+    ports:
+      - "7860:7860"
+    environment:
+      - SARVAM_API_KEY=${SARVAM_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - EMBEDDING_MODEL=BAAI/bge-small-en-v1.5
+      - GEMINI_MODEL=gemini-3.1-flash-lite
+      - RETRIEVAL_MIN_SCORE=0.42
+      - GROUNDEDNESS_MIN_SCORE=0.45
+      - RETRIEVAL_BUDGET_MS=200
+    volumes:
+      - ./data:/app/backend/data
+    restart: unless-stopped
