@@ -16,7 +16,7 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({ transcript }) 
       <div className="panel-header">
         <div className="panel-title-group">
           <span className="panel-icon">🎙️</span>
-          <h3>Audio Transcription (Sarvam Saaras v3)</h3>
+          <h3>Voice capture</h3>
         </div>
         <div className="badge-group">
           <span className="lang-tag">{transcript.language}</span>
@@ -24,7 +24,7 @@ export const TranscriptPanel: React.FC<TranscriptPanelProps> = ({ transcript }) 
         </div>
       </div>
       <div className="transcript-body">
-        <p className="transcript-text">"{transcript.text}"</p>
+        <p className="transcript-text">“{transcript.text}”</p>
       </div>
     </div>
   );

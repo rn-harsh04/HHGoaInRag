@@ -53,36 +53,36 @@ export const MicButton: React.FC<MicButtonProps> = ({
           </div>
           <span className="mic-label">
             {isRecording
-              ? `Recording... 0:${duration.toString().padStart(2, "0")}`
+              ? `Recording 0:${duration.toString().padStart(2, "0")}`
               : isProcessing
-              ? "Transcribing & Retrieving..."
-              : "Speak Question"}
+              ? "Processing your question..."
+              : "Speak now"}
           </span>
         </button>
 
         <div className="lang-picker">
-          <label htmlFor="language-select">Voice Model</label>
+          <label htmlFor="language-select">Voice mode</label>
           <select
             id="language-select"
             value={selectedLang}
             onChange={(e) => onLangChange(e.target.value)}
             disabled={isRecording || isProcessing}
           >
-            <option value="en-IN">English (India) - Sarvam</option>
-            <option value="hi-IN">Hindi (hi-IN)</option>
-            <option value="ta-IN">Tamil (ta-IN)</option>
-            <option value="bn-IN">Bengali (bn-IN)</option>
+            <option value="en-IN">English</option>
+            <option value="hi-IN">Hindi</option>
+            <option value="ta-IN">Tamil</option>
+            <option value="bn-IN">Bengali</option>
           </select>
         </div>
       </div>
       {isRecording && (
-        <div className="recording-waveform">
+        <div className="recording-waveform" aria-label="Recording indicator">
           <span className="bar b1" />
           <span className="bar b2" />
           <span className="bar b3" />
           <span className="bar b4" />
           <span className="bar b5" />
-          <span className="time-limit-hint">Max 25s auto-limit</span>
+          <span className="time-limit-hint">Max 25s</span>
         </div>
       )}
     </div>

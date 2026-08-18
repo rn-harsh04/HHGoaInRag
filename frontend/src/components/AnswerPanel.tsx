@@ -39,14 +39,14 @@ export const AnswerPanel: React.FC<AnswerPanelProps> = ({
       <div className="panel-header">
         <div className="panel-title-group">
           <span className="panel-icon">
-            {isRefusal ? "⚠️" : isError ? "✕" : "🤖"}
+            {isRefusal ? "⚠️" : isError ? "✕" : "✦"}
           </span>
           <h3>
             {isRefusal
-              ? "System Refusal Guardrail"
+              ? "Guardrail response"
               : isError
-              ? "Execution Error"
-              : "Grounded Answer (Gemini 3.1 Flash Lite)"}
+              ? "Execution error"
+              : "Grounded answer"}
           </h3>
         </div>
 
@@ -63,7 +63,7 @@ export const AnswerPanel: React.FC<AnswerPanelProps> = ({
                   groundedness.passed ? "passed" : "failed"
                 }`}
               >
-                Overlap: {(groundedness.score * 100).toFixed(0)}%{" "}
+                Evidence: {(groundedness.score * 100).toFixed(0)}%{" "}
                 {groundedness.passed ? "✓" : "✗"}
               </span>
             )}
@@ -76,20 +76,20 @@ export const AnswerPanel: React.FC<AnswerPanelProps> = ({
           <div className="refusal-box">
             <p className="refusal-title">
               {status === "refusal_unsafe"
-                ? "Input flagged by Safety Guardrail"
-                : "Passage Evidence Insufficient"}
+                ? "Safety check triggered"
+                : "Not enough evidence"}
             </p>
             <p className="refusal-text">
               {answer?.refusal_reason ||
                 answer?.text ||
                 message ||
-                "I don't have enough information in the indexed passages to answer this question."}
+                "I don't have enough grounded evidence in the indexed passages to answer this question confidently."}
             </p>
           </div>
         ) : isError ? (
           <div className="error-box">
             <p className="error-text">
-              {message || "An unexpected error occurred during processing."}
+              {message || "An unexpected issue occurred while processing your request."}
             </p>
           </div>
         ) : (
@@ -97,7 +97,7 @@ export const AnswerPanel: React.FC<AnswerPanelProps> = ({
             <p className="answer-text">{answer?.text}</p>
             {answer?.used_chunk_ids && answer.used_chunk_ids.length > 0 && (
               <div className="citations-row">
-                <span className="citations-label">Citations:</span>
+                <span className="citations-label">Evidence:</span>
                 {answer.used_chunk_ids.map((id, index) => (
                   <span key={id} className="citation-pill" title={id}>
                     [{index + 1}] {id.slice(0, 8)}...

@@ -20,7 +20,7 @@ export const LatencyBreakdown: React.FC<LatencyBreakdownProps> = ({ timings }) =
       <div className="panel-header">
         <div className="panel-title-group">
           <span className="panel-icon">⚡</span>
-          <h3>Latency Analytics & SLA Compliance</h3>
+          <h3>Pipeline timing</h3>
         </div>
         <span
           className={`sla-badge ${
@@ -28,16 +28,16 @@ export const LatencyBreakdown: React.FC<LatencyBreakdownProps> = ({ timings }) =
           }`}
         >
           {retrievalSlaMet
-            ? `✓ SLA Passed (${timings.retrieval.toFixed(1)}ms ≤ 200ms)`
-            : `⚠️ SLA Missed (${timings.retrieval.toFixed(1)}ms > 200ms)`}
+            ? `Online (${timings.retrieval.toFixed(1)} ms)`
+            : `Slow (${timings.retrieval.toFixed(1)} ms)`}
         </span>
       </div>
 
       <div className="sla-progress-container">
         <div className="sla-progress-labels">
           <span>0 ms</span>
-          <span className="sla-marker-label">Target: 200 ms SLA</span>
-          <span>&gt;200 ms</span>
+          <span className="sla-marker-label">target: 200 ms</span>
+          <span>200 ms</span>
         </div>
         <div className="sla-progress-track">
           <div
@@ -52,20 +52,20 @@ export const LatencyBreakdown: React.FC<LatencyBreakdownProps> = ({ timings }) =
 
       <div className="timings-grid">
         <div className="timing-card">
-          <span className="timing-label">🎙️ STT (Sarvam)</span>
+          <span className="timing-label">🎙️ Voice capture</span>
           <span className="timing-value">{timings.stt.toFixed(0)} ms</span>
         </div>
         <div className="timing-card highlight-card">
-          <span className="timing-label">🔍 Hybrid Retrieval</span>
+          <span className="timing-label">🔍 Retrieval</span>
           <span className="timing-value">{timings.retrieval.toFixed(1)} ms</span>
-          <span className="timing-sub">FAISS + BM25 + RRF</span>
+          <span className="timing-sub">context search</span>
         </div>
         <div className="timing-card">
-          <span className="timing-label">🤖 LLM Generation</span>
+          <span className="timing-label">🤖 generation</span>
           <span className="timing-value">{timings.llm.toFixed(0)} ms</span>
         </div>
         <div className="timing-card total-card">
-          <span className="timing-label">⏱️ Total Pipeline</span>
+          <span className="timing-label">⏱️ total</span>
           <span className="timing-value">{timings.total.toFixed(0)} ms</span>
         </div>
       </div>
