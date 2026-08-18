@@ -170,6 +170,58 @@ button {
   color: var(--text-main);
 }
 
+.topnav .voice-heard-link {
+  position: relative;
+  display: grid;
+  min-height: 54px;
+  padding: 10px 20px;
+  overflow: hidden;
+  place-items: center;
+  background: var(--accent-primary);
+  color: #0b6839;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.topnav .voice-heard-link::before,
+.topnav .voice-heard-link::after {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 7px;
+  content: "";
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    135deg,
+    #ef3f45 0 4px,
+    #f7d600 4px 8px,
+    #ef3f45 8px 12px,
+    #f7d600 12px 16px
+  );
+  background-size: 32px 7px;
+}
+
+.topnav .voice-heard-link::before {
+  top: 0;
+}
+
+.topnav .voice-heard-link::after {
+  bottom: 0;
+  transform: scaleY(-1);
+}
+
+.topnav .voice-heard-link:hover {
+  background: var(--accent-primary-strong);
+  color: #084c2b;
+  transform: translateY(-1px);
+}
+
 .hero-layout {
   display: grid;
   grid-template-columns: 1.1fr 1fr;

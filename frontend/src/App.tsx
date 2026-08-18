@@ -51,8 +51,7 @@ export const App: React.FC = () => {
         </a>
 
         <nav className="topnav" aria-label="Main navigation">
-          <a href="#voice">Get your voice heard</a>
-          
+          <a className="voice-heard-link" href="#voice">Get your voice heard</a>
         </nav>
       </header>
 
