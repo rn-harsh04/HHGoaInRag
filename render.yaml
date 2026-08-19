@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: hhgoarag-voice-rag
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      - key: EMBEDDING_MODEL
+        value: BAAI/bge-small-en-v1.5
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite
+      - key: RETRIEVAL_MIN_SCORE
+        value: "0.42"
+      - key: GROUNDEDNESS_MIN_SCORE
+        value: "0.45"
+      - key: RETRIEVAL_BUDGET_MS
+        value: "200"
+      - key: CORS_ORIGINS
+        value: "*"

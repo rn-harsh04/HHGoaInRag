@@ -32,9 +32,11 @@ class SarvamSTTService:
             )
 
         headers = {"api-subscription-key": self.settings.sarvam_api_key}
+        # Use translate mode for Indic languages so English retrieval index is matched with 0 extra latency
+        mode = "transcribe" if (language_code and language_code.startswith("en")) else "translate"
         data = {
             "model": "saaras:v3",
-            "mode": "transcribe",
+            "mode": mode,
             "language_code": language_code,
         }
         mime = "audio/webm" if (filename and filename.endswith(".webm")) else "audio/wav"
