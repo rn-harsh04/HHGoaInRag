@@ -23,9 +23,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python dependencies
+# Install python dependencies with retries and upgraded pip
 COPY backend/requirements.txt ./backend/
-RUN pip install --no-cache-dir -r ./backend/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir --retries 10 --timeout 120 -r ./backend/requirements.txt
 
 # Copy backend code and scripts
 COPY backend/ ./backend/
