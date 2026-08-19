@@ -29,6 +29,10 @@ async def lifespan(app: FastAPI):
     app.state.settings = settings
     app.state.ready = False
 
+    if not settings.faiss_index_path.exists():
+        from scripts.bootstrap_sample_data import bootstrap_sample_index
+        bootstrap_sample_index()
+
     embedder = EmbeddingService.get_instance(settings)
     retriever = HybridRetriever.load(settings, embedder)
     embedder.warmup(settings.warmup_queries)

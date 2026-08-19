@@ -8,7 +8,14 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 ROOT_DIR = BACKEND_DIR.parent
-DATA_DIR = BACKEND_DIR / "data" if (BACKEND_DIR / "data").exists() else ROOT_DIR / "data"
+
+
+def get_data_dir() -> Path:
+    if (BACKEND_DIR / "data").exists():
+        return BACKEND_DIR / "data"
+    if (ROOT_DIR / "data").exists():
+        return ROOT_DIR / "data"
+    return BACKEND_DIR / "data"
 
 
 class Settings(BaseSettings):
@@ -22,12 +29,12 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     hf_token: str = ""
 
-    chroma_persist_dir: Path = Field(default_factory=lambda: DATA_DIR / "chroma")
-    faiss_index_path: Path = Field(default_factory=lambda: DATA_DIR / "faiss" / "hnsw.index")
-    faiss_id_map_path: Path = Field(default_factory=lambda: DATA_DIR / "faiss" / "id_map.json")
-    chunk_metadata_path: Path = Field(default_factory=lambda: DATA_DIR / "processed" / "chunks.parquet")
-    parents_path: Path = Field(default_factory=lambda: DATA_DIR / "processed" / "parents.jsonl")
-    bm25_index_dir: Path = Field(default_factory=lambda: DATA_DIR / "bm25")
+    chroma_persist_dir: Path = Field(default_factory=lambda: get_data_dir() / "chroma")
+    faiss_index_path: Path = Field(default_factory=lambda: get_data_dir() / "faiss" / "hnsw.index")
+    faiss_id_map_path: Path = Field(default_factory=lambda: get_data_dir() / "faiss" / "id_map.json")
+    chunk_metadata_path: Path = Field(default_factory=lambda: get_data_dir() / "processed" / "chunks.parquet")
+    parents_path: Path = Field(default_factory=lambda: get_data_dir() / "processed" / "parents.jsonl")
+    bm25_index_dir: Path = Field(default_factory=lambda: get_data_dir() / "bm25")
 
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     gemini_model: str = "gemini-3.1-flash-lite"
@@ -41,9 +48,9 @@ class Settings(BaseSettings):
     rrf_k: int = 60
     max_parents: int = 4
 
-    cors_origins: str = "http://localhost:5173,http://localhost:7860"
+    cors_origins: str = "*"
     log_refusals: bool = True
-    refusal_log_path: Path = Field(default_factory=lambda: DATA_DIR / "logs" / "refusals.jsonl")
+    refusal_log_path: Path = Field(default_factory=lambda: get_data_dir() / "logs" / "refusals.jsonl")
     benchmark_api_key: str = ""
 
     warmup_queries: int = 5
