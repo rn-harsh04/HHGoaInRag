@@ -33,10 +33,12 @@ export const App: React.FC = () => {
 
   React.useEffect(() => {
     if (response) {
-      // Small timeout to allow DOM layout to render before scrolling
       const timer = setTimeout(() => {
-        responseRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 80);
+        if (responseRef.current) {
+          const targetY = responseRef.current.getBoundingClientRect().top + window.scrollY - 30;
+          window.scrollTo({ top: targetY, behavior: "smooth" });
+        }
+      }, 100);
       return () => clearTimeout(timer);
     }
   }, [response]);

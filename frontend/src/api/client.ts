@@ -16,7 +16,9 @@ export async function submitVoiceQuery(
   });
 
   if (!resp.ok) {
-    throw new Error(`Request failed: ${resp.status}`);
+    const errorData = await resp.json().catch(() => null);
+    const msg = errorData?.detail?.user_message || errorData?.detail || `Voice request failed (${resp.status})`;
+    throw new Error(msg);
   }
   return resp.json();
 }
@@ -28,7 +30,9 @@ export async function submitTextQuery(query: string): Promise<VoiceQueryResponse
     body: JSON.stringify({ query, language: "en" }),
   });
   if (!resp.ok) {
-    throw new Error(`Request failed: ${resp.status}`);
+    const errorData = await resp.json().catch(() => null);
+    const msg = errorData?.detail?.user_message || errorData?.detail || `Text request failed (${resp.status})`;
+    throw new Error(msg);
   }
   return resp.json();
 }

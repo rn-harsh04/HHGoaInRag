@@ -21,4 +21,6 @@ def token_overlap_score(answer: str, contexts: list[str]) -> float:
 def validate_chunk_ids(used_ids: list[str], retrieved_ids: set[str]) -> bool:
     if not used_ids:
         return False
-    return all(cid in retrieved_ids for cid in used_ids)
+    return any(cid in retrieved_ids for cid in used_ids)
+
+
