@@ -78,7 +78,8 @@ class GeminiService:
                     system_instruction=SYSTEM_PROMPT,
                     response_mime_type="application/json",
                     response_schema=GeminiAnswerSchema.model_json_schema(),
-                    temperature=0.2,
+                    temperature=0.1,
+                    max_output_tokens=256,
                 ),
             )
         except Exception as exc:

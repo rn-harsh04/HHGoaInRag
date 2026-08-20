@@ -36,6 +36,10 @@ async def lifespan(app: FastAPI):
     embedder = EmbeddingService.get_instance(settings)
     retriever = HybridRetriever.load(settings, embedder)
     embedder.warmup(settings.warmup_queries)
+    try:
+        await retriever.retrieve("warmup query for fast retrieval cache")
+    except Exception:
+        pass
 
     stt = SarvamSTTService(settings)
     gemini = GeminiService(settings)
