@@ -1751,3 +1751,31 @@ button {
   border: 1.5px solid rgba(126, 240, 191, 0.55);
 }
 
+/* Grounded badge and evidence pills with #00a800 background */
+.status-success,
+.grounded-tag.passed,
+.badge-grounded,
+span.status-success {
+  background-color: #00a800 !important;
+  color: #ffffff !important;
+  border: 1px solid #00c800 !important;
+  font-weight: 700 !important;
+  padding: 0.32rem 0.8rem !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 0 14px rgba(0, 168, 0, 0.5) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+  letter-spacing: 0.03em !important;
+}
+
+.confidence-tag {
+  background: rgba(247, 214, 0, 0.12) !important;
+  color: #f7d600 !important;
+  border: 1px solid rgba(247, 214, 0, 0.35) !important;
+  font-weight: 600 !important;
+  padding: 0.32rem 0.8rem !important;
+  border-radius: 9999px !important;
+}
+
+

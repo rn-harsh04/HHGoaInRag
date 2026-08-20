@@ -87,7 +87,11 @@ class HybridRetriever:
         with StageTimer("bm25") as t:
             tokens = tokenize(query)
             scores = self.bm25.get_scores(tokens)
-            top_indices = np.argsort(scores)[::-1][:top_k]
+            if len(scores) > top_k:
+                top_indices = np.argpartition(scores, -top_k)[-top_k:]
+                top_indices = top_indices[np.argsort(scores[top_indices])[::-1]]
+            else:
+                top_indices = np.argsort(scores)[::-1][:top_k]
         self._last_bm25_ms = t.elapsed_ms
         return [(self.bm25_ids[i], float(scores[i])) for i in top_indices if scores[i] > 0]
 

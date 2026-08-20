@@ -20,6 +20,7 @@ class EmbeddingService:
         self.model_name = model_name
         self._model = TextEmbedding(model_name=model_name, threads=1)
         self._dim: int | None = None
+        self._cache: dict[str, np.ndarray] = {}
 
     @classmethod
     def get_instance(cls, settings: Settings) -> EmbeddingService:
@@ -37,12 +38,18 @@ class EmbeddingService:
         return self._dim
 
     def embed_query(self, text: str) -> np.ndarray:
+        clean = text.strip()
+        if clean in self._cache:
+            return self._cache[clean].copy()
         prefix = "query: " if "bge" in self.model_name.lower() else ""
-        vec = next(self._model.embed([f"{prefix}{text.strip()}"]))
+        vec = next(self._model.embed([f"{prefix}{clean}"]))
         arr = np.array(vec, dtype=np.float32)
         norm = np.linalg.norm(arr)
         if norm > 0:
             arr /= norm
+        if len(self._cache) > 2000:
+            self._cache.clear()
+        self._cache[clean] = arr
         return arr
 
     def embed_passages(self, texts: list[str], batch_size: int = 64) -> np.ndarray:
