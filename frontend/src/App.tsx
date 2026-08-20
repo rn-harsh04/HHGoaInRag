@@ -29,6 +29,18 @@ export const App: React.FC = () => {
     reset,
   } = useVoiceQuery(selectedLang);
 
+  const responseRef = React.useRef<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    if (response) {
+      // Small timeout to allow DOM layout to render before scrolling
+      const timer = setTimeout(() => {
+        responseRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [response]);
+
   const handleTextSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!textInput.trim()) return;
@@ -145,7 +157,7 @@ export const App: React.FC = () => {
       )}
 
       {response && (
-        <section className="chat-panel" id="workspace">
+        <section className="chat-panel response-highlight-active" id="workspace" ref={responseRef}>
           <div className="response-header">
             <h2>Latest response</h2>
             <div className="response-actions">
